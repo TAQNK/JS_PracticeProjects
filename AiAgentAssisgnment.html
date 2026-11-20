@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            padding: 0px;
+            margin: 0px;
+            box-sizing: border-box;
+        }
+        body{
+            background-color: black;
+            height: 100vh;
+            display: flex;
+            width: 100%;
+        }
+        .container{
+            margin: auto;
+            border-radius: 10px;
+            background-color: #dadada;
+            height: 50%;
+            padding: 10px;
+            width: 50%;
+        }
+        .card{
+            display: flex;
+            flex-direction: column;
+            
+            width: 100%;
+            padding: 10px 0px 0px 0px ;
+        }
+        .response{
+            height: 70%;
+        }
+        input[type="submit"]{
+            width: 20%;
+        }
+        input[type="text"]{
+            width: auto;
+            flex: 0;
+        }
+        .input{
+            width: 100%
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <template id="response">
+            <div class="box">
+                <h4>AI Response : </h4>
+                <div class="inputData"></div>
+            </div>
+        </template>
+
+        <div  class="response">
+            
+        </div>
+       
+        <div class="card">
+             <h1>Hi! Lets chat ...</h1>
+             <div class="input">
+                  <input type="text" class="textField">
+                <input type="submit" class="submitBtn">
+             </div>
+        </div>
+    </div>
+</body>
+</html>

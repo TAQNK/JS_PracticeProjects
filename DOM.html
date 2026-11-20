@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 class="heading" >My heading</h1>
+   <div class="heading ">New Heading </div>
+    
+    <script>
+        // let obj = window.document;
+        // console.log(obj);
+        // console.dir(obj);
+        // console.log(obj.head);
+        // console.log(obj.body);
+        // console.log(window.document.getElementById("header"));
+        // const header = obj.getElementById("header");
+        // console.log(header.textContent);
+        // // manuplating dom nodes/objects 
+        // header.textContent = "Hey new updates are available."
+
+        const headings = document.getElementsByTagName("h1");
+        console.log(headings);
+
+const heading = document.getElementsByClassName("heading");
+console.log(heading);
+
+console.log(document.querySelectorAll("h1"));
+
+    </script>
+</body>
+</html>

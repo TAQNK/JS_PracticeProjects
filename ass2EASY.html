@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark Light Toggle</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .main {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: white;
+            transition: 0.5s;
+        }
+
+        .container {
+            width: 170px;
+            height: 80px;
+            background-color: black;
+            border-radius: 40px;
+            padding: 10px;
+            position: relative;
+            transition: 0.5s;
+        }
+
+        .switch {
+            width: 60px;
+            height: 60px;
+            border: none;
+            border-radius: 50%;
+            background-color: white;
+            position: absolute;
+            left: 10px;
+            transition: 0.5s;
+            cursor: pointer;
+        }
+
+        /* Dark mode */
+        .main.dark {
+            background-color: black;
+        }
+
+        .dark .container {
+            background-color: white;
+        }
+
+        .dark .switch {
+            background-color: black;
+            transform: translateX(91px);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="main" id="main">
+
+        <div class="container">
+            <button class="switch" id="switch"></button>
+        </div>
+
+    </div>
+
+    <script>
+        const main = document.querySelector("#main");
+        const btn = document.querySelector("#switch");
+
+        btn.addEventListener("click", () => {
+            main.classList.toggle("dark");
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            padding:0px;
+            margin:0px;
+            box-sizing: border-box;
+        }
+        body{
+            
+        }
+        .form{
+            padding:10px;
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 10px;
+            /* box-shadow: 1px 2px 10px white; */
+            color:black;
+            display:flex;
+            gap:10px;
+            font-size: 20px;
+            width:fit-content;
+            width: 100%;
+        }
+        .btn{
+            padding:0px 10px;
+            border-radius: 5px;
+            border: none;
+            background: rgba(255, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color:#dadada;
+            font-weight:700;
+            transition: all .2s ease-in-out;
+        }
+        .btn:hover{
+            background: linear-gradient(150deg , green, black);
+            color:#dadada;
+        }
+        input{
+            font-size: 20px;
+            border:none;
+            border-radius: 10px;
+            color:#888686;
+            padding:5px;
+            background: linear-gradient(150deg , white , #667eea);
+            transition: all 1s ease-in-out;
+        }
+        input:focus-visible{
+            outline: none;
+            background: linear-gradient(150deg , black , #667eea);
+            color: whitesmoke;
+        }
+        .task{
+            background: linear-gradient(150deg , #764ba2  ,white);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 10px;
+            width: fit-content;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 10px;
+            color: #151414;
+            box-shadow: 2px 4px 20px rgba(215, 212, 212, 0.622);
+        }
+        .removeBtn{
+            background:rgba(50, 24, 117, 0.229);
+            backdrop-filter: blur(20px);
+            font-weight: 600;
+            color: #dadada;
+        }
+        .updateBtn{background: rgba(50, 24, 117, 0.229);
+            backdrop-filter: blur(20px);
+            font-weight: 600;
+            color: #dadada;
+        }
+        .updateBtn:hover{
+            background: linear-gradient(150deg , green , black);
+            color:#dadada;
+        }
+        .removeBtn:hover{
+            background: linear-gradient(150deg , red , black);
+            color:white;
+        }
+        .content{
+            margin: 10px 0px 0px 0px;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+        .content p{
+            text-align: center;
+            padding: 10px;
+            font-size: 30px;
+            color: #dadada;
+            width: 100%;
+            font-weight: 700;
+        }
+        .form .input{
+            width: 90%;
+        }
+        .form .btn{
+            width: 10%;
+        }
+        .updateInfo{
+            background-color: #151414;
+            border-radius: 10px;
+            padding: 10px;
+            
+            flex-direction: column;
+            gap: 10px;
+            color: white;
+            position: fixed;
+            z-index: 1;
+            width: 50%;
+            left: 25%;
+            top: 35%;
+            display: none;
+        }
+        .active{
+            display: flex;
+        }
+        .updateInfo input[type="text"]{
+            background: #888686;
+            color: white;
+        }
+        .updateInfo input[type="button"]{
+           
+            background: gainsboro;
+            color: black;
+        }
+        .updateInfo input[type="button"]:hover{
+            background: linear-gradient(150deg , green , white);
+        }
+        .main{
+            height: 100vh;
+            padding: 10px;
+            /* background: #1683EC;*/
+            background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+        }
+
+    </style>
+</head>
+
+<body>
+     <div class="updateInfo" id="updateInfo">
+        <h1>Update Task</h1>
+        <input type="text" placeholder="enter text here"/>
+        <input type="button" value="Update"/>
+    </div>
+    <div class="main" id="main">
+          
+    <form class="form" id="form" >
+        <input class="input" type="text" placeholder="enter a new task" id="data">
+        <input type="submit" class="btn" value="Add"></input>
+    </form>
+    <div class="content" id="content">
+        <p>Start now by clicking on add button</p>
+    </div>
+    </div>
+ 
+    <script>
+        const data = document.getElementById("data");
+        const form = document.getElementById("form");
+        const content = document.getElementById("content");
+
+        const updateBtn = document.getElementById("updateBtn");
+        const removeBtn = document.getElementById("removeBtn");
+        const main = document.getElementById("main");
+        const updateInfo = document.getElementById("updateInfo");
+
+const updateInput = updateInfo.querySelector('input[type="text"]');
+
+const saveUpdateBtn = updateInfo.querySelector('input[type="button"]');
+
+let currentTaskId = null;
+        localStorage.clear();
+        form.addEventListener("submit" ,(e) => {
+            e.preventDefault();
+            const task = data.value;
+            // window.localStorage.setItem(localStorage.length+1 ,task );
+            displayData();
+        });
+        function displayData() {
+            let str = "";
+           
+
+            for(let counter  = 1 ; counter <=localStorage.length ; counter ++){
+                const obj = localStorage.getItem(counter);
+                 // remove nulls
+                if(obj == null){ localStorage.removeItem(obj);continue;}
+                str += ` <div class="task">
+            <h2 id="t">${obj}</h2>
+             <div>
+                 <input type="button" value="Update" class="updateBtn" id="updateBtn" data-boxid="${counter}">
+            <input type="button" value="Remove" class="removeBtn" id="removeBtn" data-boxid=${counter}>
+            </div>
+        </div>`;
+            }
+            // console.log(str);
+            updateUi(str);
+
+        }
+        function updateUi(str){
+            content.innerHTML = str;
+        }
+        content.addEventListener('click', (event)=>{
+            
+            // if(event.target.classList.contains("removeBtn")){
+            //     console.log("removebtn clicked");
+            // }
+            let objId   = event.target.dataset.boxid;
+            if(event.target.classList.contains("removeBtn")){
+                 removeTask(objId);
+            }
+            else if(event.target.classList.contains("updateBtn")){
+                updateTask(objId);
+            }
+        })
+
+        function removeTask(objId){
+            localStorage.removeItem(objId);
+            displayData();
+        }
+        function updateTask(objId){
+           currentTaskId = objId ; 
+           const taskExisting = localStorage.getItem(objId);
+           updateInput.value = taskExisting;
+           updateInfo.classList.add("active");
+        }
+        
+        saveUpdateBtn.addEventListener('click' , () => {
+            const updatedTask = updateInput.value ;
+            console.log(updateTask);
+            if(updatedTask == ""){
+                alert("Task cant be empty.");
+                return;
+            }
+            localStorage.setItem(currentTaskId , updatedTask);
+            displayData();
+            updateInfo.classList.remove("active");
+            
+        })
+    
+        
+    </script>
+</body>
+</html>

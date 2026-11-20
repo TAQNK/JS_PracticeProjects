@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+      body {
+        height: 100vh;
+        background-color: black;
+      }
+      .container {
+        background: linear-gradient(red, black);
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 3px 0px 15px red;
+        color: white;
+        width: 400px;
+      }
+      input {
+        padding: 10px;
+        border: none;
+        border-radius: 10px;
+        font-size: 10px;
+        width: 150px;
+      }
+      .footer {
+        padding: 10px;
+        display: flex;
+        flex-wrap: wrap;
+        background-color: rgb(51, 51, 51);
+        margin: auto;
+        width: fit-content;
+        border-radius: 20px;
+        height: max-content;
+        gap: 20px;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .user-form {
+        display: flex;
+        gap: 20px;
+      }
+      .submitBtn {
+        background: linear-gradient(darkred, black);
+        border-radius: 10px;
+        height: 40px;
+        border: none;
+        font-size: 14px;
+        font-weight: 700;
+        transition: all 0.21s ease-in-out;
+        width: fit-content;
+        padding: 10px;
+        color: white;
+        outline: 1px solid red;
+      }
+      .submitBtn:hover {
+        background: linear-gradient(green, black);
+        outline: 1px solid green;
+        color: #dadada;
+      }
+      .main-section {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        padding: 30px;
+      }
+      .card {
+        height: 300px;
+        width: 250px;
+        background: linear-gradient(green, white);
+        border-radius: 20px;
+        border: none;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        box-shadow: 1px 2px 10px white;
+      }
+      .card .img {
+        height: 70%;
+        width: 100%;
+      }
+      .info {
+        background-color: white;
+        color: black;
+      }
+
+      .count {
+        background: linear-gradient(red, green);
+        color: white;
+        padding: 10px;
+        width: fit-content;
+        border-radius: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <p class="info">
+      1.i render data from the api. ->2. move that data to my localstorage ->3.
+      after moving displaying data to user form backend ->4. user will apply
+      fiter on data and have the data filtered.
+    </p>
+    <div class="main-section">
+      <div class="container">
+        <div class="header">
+          <h2>Filter Data</h2>
+        </div>
+        <form class="user-form" id="form">
+          <input
+            type="text"
+            placeholder="Enter Product"
+            class="input"
+            id="name"
+          />
+          <button class="submitBtn" id="submitBtn">Filter</button>
+        </form>
+      </div>
+      <div class="count">Count = <span id="count"></span></div>
+      <div class="footer" id="footer"></div>
+    </div>
+  </body>
+  <script>
+    const footer = document.getElementById("footer");
+    const filterBtn = document.getElementById("submitBtn");
+    const count = document.getElementById("count");
+
+    // fetch the data from backendAPI
+    function fetchData() {
+      fetch("https://fakestoreapi.com/products/")
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          addData(data);
+        });
+    }
+    fetchData();
+
+    // adding data to db (localstorage)
+    function addData(obj) {
+      count.innerText = obj.length;
+
+      let counter = 1;
+      localStorage.clear();
+      for (let item of obj) {
+        // console.log(item);
+
+        const product = {};
+        product.name = item.title;
+        product.price = item.price;
+        product.img = item.image;
+        product.rate = item.rating.rate;
+
+        // console.log(product);
+
+        // adding data in localstorage
+
+        localStorage.setItem(counter, JSON.stringify(product));
+        counter++;
+      }
+      displayData();
+    }
+
+    // display the data
+    function displayData() {
+      let str = "";
+      // fetch data from db (localstorage)
+      for (let counter = 1; counter <= localStorage.length; counter++) {
+        let string = localStorage.getItem(counter);
+        // console.log(obj);
+
+        let obj = JSON.parse(string);
+        // console.log(obj);
+
+        str += `<div class="card">
+    <div class="img" style="
+        background-image: url('${obj.img}');
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
+    "></div>
+    <h3>${obj.name}</h3>
+    <h4>💵 ${obj.price}</h4>
+    <p>⭐ ${obj.rate}</p>
+</div>`;
+      }
+
+      //   adding to dom
+      footer.innerHTML = str;
+    }
+
+    filterBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      let userText = document.getElementById("name").value.toLowerCase().trim();
+      let items = [];
+      for (let counter = 1; counter <= localStorage.length; counter++) {
+        let item = localStorage.getItem(counter);
+        item = JSON.parse(item);
+        // console.log(item);
+
+        if (item.name.toLowerCase().includes(userText)) {
+          // console.log(item);
+          items.push(item);
+        }
+      }
+      // console.log(items);
+      renderFilter(items);
+    });
+
+    function renderFilter(items) {
+      // console.log(items);
+      count.innerText = items.length;
+      let str = "";
+      for (const obj of items) {
+        str += `<div class="card">
+    <div class="img" style="
+        background-image: url('${obj.img}');
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
+    "></div>
+    <h3>${obj.name}</h3>
+    <h4>💵 ${obj.price}</h4>
+    <p>⭐ ${obj.rate}</p>
+</div>`;
+      }
+
+      console.log(str);
+      footer.innerHTML = str;
+    }
+  </script>
+</html>

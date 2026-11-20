@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+      body {
+        height: 100vh;
+        background-color: black;
+        display: flex;
+        flex-direction: column;
+      }
+      .navbar {
+        height: 30px;
+        background: linear-gradient(red, black);
+        padding: 10px;
+        font-size: 20px;
+        font-weight: 600;
+        width: 100%;
+        color: white;
+      }
+      .container {
+        background-color: rgba(255, 1, 1, 0.778);
+        margin: auto;
+        border-radius: 20px;
+        box-shadow: 4px 0px 15px white;
+        outline: 2px solid black;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
+        padding: 10px;
+      }
+      img {
+        height: 200px;
+        width: 100%;
+        border-radius: 10px;
+        outline: 1px solid black;
+      }
+      .content {
+        display: flex;
+        width: 100%;
+        justify-content: space-around;
+        background-color: rgb(244, 238, 238);
+        border-radius: 10px;
+        outline: 2px solid black;
+        padding: 10px 0px;
+      }
+      button {
+        width: 50px;
+        height: 30px;
+        border-radius: 10px;
+        border: none;
+      }
+      .likeBtn {
+        background: linear-gradient(green, black);
+      }
+      .disBtn {
+        background: linear-gradient(red, black);
+      }
+      .totalCount {
+        background-color: antiquewhite;
+        padding: 10px;
+        border-radius: 10px;
+        outline: 1px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="navbar">Web Storage</div>
+    <div class="container">
+      <img src="img.png" alt="" />
+      <div class="content">
+        <div class="up like">
+          <h2>Likes</h2>
+          <h2 id="likes">0</h2>
+          <button id="likeBtn" class="likeBtn">👍</button>
+        </div>
+        <div class="down like">
+          <h2>Dislikes</h2>
+          <h2 id="dislikes">0</h2>
+          <button id="disBtn" class="disBtn">👎</button>
+        </div>
+      </div>
+      <div class="totalCount">
+        <h1>Total : <span id="totalLike">0</span></h1>
+      </div>
+    </div>
+
+    <script>
+      const likeBtn = document.querySelector("#likeBtn");
+      const disBtn = document.querySelector("#disBtn");
+      const totalLike = document.querySelector("#totalLike");
+      const likes = document.querySelector("#likes");
+      const disLikes = document.querySelector("#dislikes");
+      let retValT = localStorage.getItem("total");
+      let total = 0;
+      if(retValT){
+        total = retValT;
+      }else{
+        localStorage.setItem("total" , 0);
+        total = localStorage.getItem("total");
+      }
+      let retValL = localStorage.getItem("likes");
+      let Totallikes = 0;
+      if(retValL){
+        Totallikes = retValL;
+      }else{
+        localStorage.setItem("likes" , 0);
+        Totallikes = localStorage.getItem("likes");
+      }
+       let retValD = localStorage.getItem("dislikes");
+       let Totaldislikes = 0;
+      if(retValD){
+        Totaldislikes = retValL;
+      }else{
+        localStorage.setItem("dislikes" , 0);
+        Totaldislikes = localStorage.getItem("dislikes");
+      }
+      
+      totalLike.textContent = localStorage.getItem("total");
+      likes.textContent = localStorage.getItem("likes");
+      disLikes.textContent = localStorage.getItem("dislikes");
+      const likeBtnHandler = () => {
+        likes.textContent = +Totallikes + 1;
+        Totallikes++;
+        total++;
+        localStorage.setItem("likes",Totallikes);
+        localStorage.setItem("total" , total);
+        totalLike.textContent = localStorage.getItem("total");
+      }; 
+      const disBtnHandler = () => {
+        const dislikes = document.querySelector("#dislikes");
+        dislikes.textContent = +dislikes.textContent + 1;
+        total --;
+        Totaldislikes ++;
+        localStorage.setItem("dislikes",Totaldislikes);
+        localStorage.setItem("total",total);
+        totalLike.textContent = localStorage.getItem("total");
+      }
+      likeBtn.addEventListener("click", likeBtnHandler);
+      disBtn.addEventListener("click",disBtnHandler);
+    </script>
+  </body>
+</html>

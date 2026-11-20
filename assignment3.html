@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      .nav {
+        padding: 10px;
+        background: linear-gradient(green, black);
+        color: white;
+        font-size: 20px;
+        font-weight: 600;
+      }
+      body {
+        height: 100vh;
+        background-color: black;
+        display: flex;
+        flex-direction: column;
+      }
+      .infoCard {
+        margin: auto;
+        background: black;
+        padding: 10px 30px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        color: rgb(247, 242, 242);
+        
+      }
+      .infoCard h1{
+        font-size: 50px;
+      }
+      .infoCard p{
+        font-size: 20px;
+      }
+      .buyBtn {
+        background: linear-gradient(red, black);
+        border-radius: 10px;
+        width: fit-content;
+        color: white;
+        padding: 10px;
+        font-weight: 600;
+        font-size: 20px;
+        border: none;
+        cursor: pointer;
+        
+      }
+     
+      .card{
+         margin: auto;
+        background: linear-gradient(rgb(59, 242, 17), white);
+        width: fit-content;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        color: black;
+        border-radius: 20px;
+        box-shadow: 10px 0px 30px green;
+        justify-content: center;
+        align-items: center;
+      }
+      img{
+        height: 200px;
+        border-radius: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="nav">Swiggy</div>
+    <div class="infoCard">
+      <h1>Palak Panner</h1>
+      <p>
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Amet, libero.
+        Inventore pariatur ullam quae, atque, id doloremque excepturi
+        exercitationem aliquam voluptas mollitia corrupti quod illum, magnam
+        porro aliquid deleniti dolores?
+      </p>
+      <button class="buyBtn">Order Now</button>
+    </div>
+
+    <div class="card">
+      <img src="palak.png" alt="" id="itemImg"/>
+      <h1 id="itemName">Palak panner</h1>
+      <p> ⭐ <span id="itemRating">4.5</span></p>
+    </div>
+    
+
+   <script>
+        
+   </script>
+  </body>
+</html>

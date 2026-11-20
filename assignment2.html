@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            padding: 0px;
+            margin: 0px;
+            box-sizing: border-box;
+        }
+        .main{
+            height: 100vh;
+            display: flex;
+            background-color: white;
+            transition: all 1s ease-in-out;
+        }
+        .container{
+            height: 80px;
+            width: 170px;
+            background-color: rgb(8, 8, 8);
+            margin: auto;
+            border-radius: 40px;
+            padding: 10px;
+            position: relative;
+            transition: all 1s ease-in-out;
+        }
+        .switch{
+            height: 60px;
+            width: 60px;
+            background-color: white;
+            border-radius: 50%;
+            position: absolute;
+            transition: all 1s ease-in-out;
+            left:10px;
+            right:10px;
+            border: none;
+        }
+        .moveright{
+            left: 101px;
+        }
+        .moveleft{
+            right:101px;
+        }
+        .dark{
+            background: #000;
+        }
+        .light{
+            background:white;
+        }
+    </style>
+</head>
+<body>
+    <div class="main light" id="main">
+        <div class="container dark" id="container">
+        <button class="switch light " id="switch"></button>
+    </div>
+    </div>
+    
+
+    <script>
+        const btn=  document.querySelector("#switch");
+        const main = document.querySelector("#main");
+        const container = document.querySelector("#container");
+        const clickHandler = () => {
+            if(btn.classList.contains("moveleft")){
+                btn.classList.add("moveright");
+                btn.classList.remove("moveleft");
+                 btn.classList.add("dark");
+                btn.classList.remove("light");
+                main.classList.remove("light");
+                main.classList.add("dark");
+                container.classList.remove("dark");
+                container.classList.add("light");
+            }else{
+                btn.classList.add("moveleft");
+                btn.classList.remove("moveright");
+                 btn.classList.add("light");
+                btn.classList.remove("dark");
+                 main.classList.remove("dark");
+                main.classList.add("light");
+                container.classList.remove("light");
+                container.classList.add("dark");
+            }
+        }
+        btn.addEventListener("click",clickHandler);
+    </script>
+</body>
+</html>

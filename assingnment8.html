@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    Resolving the callback hell
+    <hr />
+    SOLUTION - > Using promises and returning promises
+
+    <ul id="list"></ul>
+  </body>
+  <script>
+    const list = document.getElementById("list");
+    async function fetchData() {
+        let str = "";
+      fetch("https://fakestoreapi.com/products/1")
+        .then((res) => {
+          return res.json();
+        })
+        .then((data) => {
+            
+          str += `<li class="listItem">Title :${data.title} ID :${data.id} 
+            </li>`;
+          return fetch("https://fakestoreapi.com/products/2");
+        })
+        .then((res) => {
+          return res.json();
+        })
+        .then((data) => {
+              str += `<li class="listItem">Title :${data.title} ID :${data.id} 
+            </li>`;
+            console.log(str);
+            // this is where the collected data is 
+            list.innerHTML = str;
+        })
+        .catch((err) => console.log(err));
+
+    
+    }
+fetchData();
+  </script>
+</html>

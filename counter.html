@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<link>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+   <style>
+    *{
+        padding: 0;
+        margin: 0;
+    }
+    .navbar{
+        background-color: black;
+        color:white;
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
+        height: 50px;
+        align-items: center;
+        padding: 10px 20px;
+    }
+    .navbar div{
+        font-size: 30px;
+    }
+    .container{
+        width: 200px;
+        height: 100px;
+        padding: 20px;
+        background-color:white ;
+        border-radius: 20px;
+        margin: auto;
+        margin-top: 100px;
+        text-align: center;
+        box-shadow: 2px 0px 15px black;
+    }
+    .btns{
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+    }
+    button{
+        height: 40px;
+        width: 60px;
+        border: none;
+        background-color: black;
+        color: white;
+        border-radius: 20px;
+        font-weight: 700;
+        transition:all 0.2s ease-in-out;
+    }
+   button:hover{
+    background-color: #dadada;
+    color: black;
+    height: 43px;
+    width: 63px;
+    transform: scale(1.1);
+    box-shadow: 1px 0px 5px black;
+   }
+    .decBtn{
+        background-color: red;
+    }
+    .incBtn{
+        background-color: green;
+    }
+    .resetBtn{
+        background:linear-gradient(red,black);
+        color: whitesmoke;
+        height: 30px;
+        width: 70px;
+        font-size: 15px;
+        transition: all 0.2s ease-in-out;
+    }
+    .resetBtn:hover{
+        color: rgb(232, 231, 231);
+        background: linear-gradient(rgb(56, 255, 56),black);
+        height:34px;
+        width: 74px;
+    }
+    body{
+        height: 100vh;
+        background-color: #dadada;
+        font-family: sans-serif;
+    }
+   </style>
+<body>
+  <div class="navbar">
+    <div>Counter App</div>
+    <button class="resetBtn" onclick="resetCount()">Reset</button>
+  </div>
+   <div class="container">
+    <h1>Count is <span id="count">0</span></h1>
+    <div class="btns">
+        <button class="decBtn" onclick="decCount()">Dec</button>
+        <button class="incBtn" onclick="incCount()">Inc</button>
+    </div>
+   </div>
+
+   <script>
+    const count = document.getElementById("count");
+    let intialValue = 0;
+    let retVal = localStorage.getItem("count");
+
+    if(retVal){
+        intialValue = retVal;
+        count.textContent = intialValue;
+    }else{
+        intialValue = 0 ;
+    }
+    function incCount(){
+        intialValue ++;
+        localStorage.setItem("count" , intialValue);
+        count.textContent = localStorage.getItem("count");
+    }
+    function decCount(){
+        if(intialValue >0){
+            intialValue--;
+            localStorage.setItem("count",intialValue);
+            count.textContent = localStorage.getItem("count");
+        }
+    }
+    function resetCount(){
+       localStorage.setItem("count",0);
+       intialValue=0;
+       count.textContent = localStorage.getItem("count");
+    }
+   </script>
+</body>
+</html>

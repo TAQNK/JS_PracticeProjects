@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Amazon</title>
+    <style>
+      * {
+        padding: 0px;
+        margin: 0px;
+      }
+      body {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        background: linear-gradient(
+          150deg,
+          rgb(240, 238, 238),
+          rgba(241, 241, 238, 0.677)
+        );
+      }
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid black;
+        padding: 5px 10px;
+      }
+      h2 {
+        font-weight: 900;
+        font-size: 23px;
+      }
+      nav form {
+        padding: 5px;
+        border: none;
+        color: black;
+        background: rgba(194, 192, 165, 0);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(220, 220, 216, 0.814);
+        box-shadow: 2px 2px 20px #dadada;
+        border-radius: 10px;
+      }
+      nav form input[type="text"] {
+        padding: 5px 10px;
+        font-size: 17px;
+        border: none;
+        color: black;
+        background: rgba(194, 192, 165, 0);
+        backdrop-filter: blur(20px);
+        border-radius: 10px;
+        border-bottom: 1px solid black;
+      }
+      nav form input[type="text"]:focus-visible{
+        outline: none;
+      }
+      nav form input[type="submit"] {
+        font-size: 17px;
+        border: 0px;
+        background: rgba(194, 192, 165, 0);
+        backdrop-filter: blur(20px);
+        cursor: pointer;
+      }
+      nav form input[type="submit"]:hover {
+        box-shadow: 2px 2px 20px #dadada;
+      }
+      .count {
+        padding: 5px 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .count button{
+          padding: 10px;
+        border-radius: 10px;
+        border: 0px;
+        background: linear-gradient(rgb(102, 0, 128) , black);
+        color:white;
+        font-size: 17px;
+        margin-top: 5px;
+      }
+      .count button:hover{
+        background: linear-gradient(rgb(219, 33, 64) , black);
+        color:#dadada;
+        box-shadow: 1px 2px 10px black;
+      }
+      .count h2 {
+        font-size: 16px;
+        font-weight: 200;
+      }
+      .main{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        padding: 10px;
+        justify-content: center;
+      }
+      .card{
+        background: #dadada4c;
+        border-radius: 10px;
+        padding:  15px;
+        outline: 1px solid black;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 200px;
+      }
+      
+      .card button{
+        padding: 10px;
+        border-radius: 10px;
+        border: 0px;
+        background: linear-gradient(green , black);
+        color:white;
+        font-size: 17px;
+        margin-top: 5px;
+      }
+
+      .card button:hover{
+        background: linear-gradient(rgba(38, 255, 0, 0.438),rgba(0, 0, 0, 0.838));
+        color: white;
+        box-shadow: 1px 2px 10px black;
+      }
+      .cartView{
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        background: rgba(36, 36, 33, 0.092);
+        backdrop-filter: blur(20px);
+        border-radius: 10px;
+        width: 40%;
+        box-shadow: 2px 2px 20px;
+
+        position: absolute;
+        left: 28%;
+        top: 5%;
+        display: none;
+      }
+      .active{
+        display: block;
+      }
+      .cartView .content{
+        margin: 10px 0px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .cartView .item{
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        
+      }
+
+      .cartView .buy{
+        background: #5b5b5b9c;
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: white;
+        border-radius: 10px;
+      }
+      .cartView .placeOrderBtn{
+        padding: 5px;
+        background: linear-gradient(red , black);
+        color: white;
+        font-weight: 800;
+        border: none;
+        border-radius: 5px;
+      }
+      
+      .item div{
+        display: flex;
+        gap:5px;
+        justify-content: space-around;
+        align-items: center;
+        button{
+          width: 30px;
+          height: 20px;
+
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <h2>Amazon</h2>
+      <form class="search">
+        <input type="text" placeholder="Search Item" id="searchItem"/>
+        <input type="submit" value="🔍" />
+      </form>
+    </nav>
+    <div class="count">
+      <h2>Items Found <span id="count"></span></h2>
+      <button class="viewCart" id="viewCart">View Cart 🛒</button>
+    </div>
+    <div class="main" id="main">
+    
+
+      </div>
+    </div>
+
+
+
+    <div class="cartView" id="cartView">
+        <h1>Cart View</h1>
+        <h2>Items Found :</h2>
+        <hr>
+        <div class="content" id="content">
+              <div>No items found</div>
+         
+        </div>
+        <div class="buy"><div>Total Price : 💵 <span id="totalPrice">0</span></div> <button id="placeOrderBtn" class="placeOrderBtn"> Place Order ✅</button></div>
+    </div>
+
+
+
+    <script>
+      // display info
+      const count = document.getElementById("count");
+      const main = document.getElementById("main");
+      localStorage.clear();
+      
+      fetch("https://fakestoreapi.com/products")
+      .then(response => response.json())
+      .then((items)=> {
+        localStorage.setItem("items" , JSON.stringify(items));
+        localStorage.setItem("cart",JSON.stringify([]));
+        displayData(JSON.parse(localStorage.getItem("items")));
+      })
+
+
+      // display data to UI
+      function displayData(items){
+        let str = "";
+        for(const item of items){
+          // console.log(item);
+          str += ` <div class="card">
+        <div class="img" style="background: url(${item.image});background-position: center;
+        background-repeat:no-repeat;
+        background-size: contain;height: 200px;
+        width: 200px;"></div>
+        <h2>${item.title}</h2>
+        <p>Price : 💵${item.price}</p>
+        <p>Rating : ⭐${item.rating.rate}</p>
+        <button class="addToCartBtn" id="${item.id}">Add to cart 🛒</button>
+      </div>`;
+        }
+        //ui updated
+        // console.log(str);
+        count.textContent = items.length;
+        main.innerHTML = str;
+      }
+
+
+      //search mechanism
+      const searchItem = document.getElementById("searchItem");
+      const content = document.getElementById("content");
+      searchItem.addEventListener("keyup" , () => {
+        const items = [];
+        const mainItems = JSON.parse(localStorage.getItem("items"));
+
+        mainItems.forEach(item => {
+          if(item.title.toLowerCase().startsWith(searchItem.value.trim().toLowerCase())){
+            items.push(item);
+          }
+        });
+        
+        displayData(items);
+      })
+
+      // addTocart feature 
+
+      // event delgation
+     
+      const totalP = document.getElementById("totalPrice");
+      main.addEventListener("click" , (event)=>{
+        if(event.target.classList.contains("addToCartBtn")){
+          const idToAdd= event.target.id;
+          const cartDetails = JSON.parse(localStorage.getItem("cart"));
+
+          if(cartDetails.find(i => i.item.id == idToAdd) != null){
+            // it already exists
+            // console.log(cardDetails);
+            const updatedCart = cartDetails.find(i => i.item.id == idToAdd);
+
+            cartDetails.find(i => i.item.id == idToAdd).quantity = updatedCart.quantity + 1;
+            
+            localStorage.setItem("cart" ,JSON.stringify(cartDetails) );
+          }else{
+            const fetchedItemDetails = JSON.parse(localStorage.getItem("items")).find(item => item.id == idToAdd);
+          // console.log(item);
+            const itemToAdd = {
+            item: fetchedItemDetails ,
+            quantity : 1
+          };
+          cartDetails.push(itemToAdd);
+          localStorage.setItem("cart" ,JSON.stringify(cartDetails) );
+          }
+
+          displayCart();
+        }
+      })
+
+
+      function displayCart(){
+          let str = "";
+          const cartDetails = JSON.parse(localStorage.getItem("cart"));
+          let totalPrice = 0;
+          for(const cartItem of cartDetails){
+            // console.log(cartItem);
+            str += `
+            <div class="item">
+                <div>
+                    <div class="itemImg" style="background: url(${cartItem.item.image});
+        background-position:center;
+        background-repeat: no-repeat;
+        background-size:contain;  height: 25px;
+        width: 20px;"></div>
+                    <h4> x ${cartItem.quantity}</h4>
+                     <button id="${cartItem.item.id}" class
+                     ="addItemBtn">✅</button>
+                    <button id="${cartItem.item.id}" class
+                    ="removeItemBtn">❌</button>
+                </div>
+                <h4>${cartItem.item.title}</h4>
+                <h4>💸${cartItem.item.price * cartItem.quantity}  </h4>
+            </div>`;
+
+            totalPrice += cartItem.item.price * cartItem.quantity ;
+          }
+
+          // console.log(str);
+
+          content.innerHTML = str;
+          totalP.textContent = totalPrice.toFixed(2);
+      }
+      
+
+      // adding new items and removing items from cart
+     
+
+      // event delegation
+
+      content.addEventListener("click" , (event) => {
+        let cartItems = JSON.parse(localStorage.getItem("cart"));
+        const itemId = event.target.id ;
+        if(event.target.classList.contains("addItemBtn")){
+          // add item in cart
+          
+          
+          for(const i in cartItems){
+
+            if(cartItems[i].item.id == itemId){
+              cartItems[i].quantity  += 1;
+              break;
+            }
+          }
+        }else if(event.target.classList.contains("removeItemBtn")){
+          // remove item from cart
+          
+          for(const i in cartItems){
+            if(cartItems[i].item.id == itemId){
+              if(cartItems[i].quantity == 1){
+                cartItems.splice(i , 1);
+                // console.log(cartItems);
+                break;
+              }
+              cartItems[i].quantity  -= 1;
+              break;
+            }
+          }
+          
+        }
+
+        // update the localstorage
+          localStorage.setItem("cart",JSON.stringify(cartItems));
+          displayCart();
+          // console.log(cartItems);
+      })
+    const viewBtn = document.getElementById("viewCart");
+    const cart = document.getElementById("cartView");
+  
+    viewBtn.addEventListener("click" , ()=>{
+      cart.classList.toggle("active");
+    })
+
+    const placeOrderBtn = document.getElementById("placeOrderBtn");
+    placeOrderBtn.addEventListener("click" , () => {
+      alert("Order Placed");
+      // clearing the memory + new empty cart feature
+      location.reload();
+    })
+    
+    </script>
+
+  </body>
+</html>
